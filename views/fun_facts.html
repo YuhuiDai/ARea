@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <title>Fun Facts</title>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="css/style2.css">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Overview</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+            <p>Section</p>
+            <li>
+                <a href="/guideline">Guideline</a>
+            </li>
+            <li class="active">
+                <a>Information</a>
+                <ul class="list-unstyled">
+                    <li><a href="/personal">Personal information</a></li>
+                    <li><a href="/bio">Biography</a></li>
+                    <li class="active"><a href="#">Fun facts</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/marker">2D marker uploads</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <img src="resources/cornell_grey.png" height ="45px" class="d-inline-block align-top" alt="">
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">A R e a</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="guideline">
+            <h2 style="color:black; font-size: 30px;">Fun Facts</h2>
+            <form action="/marker"  style="text-align: center">
+                <div class="row col-lg-12">
+                    <div class="sub">
+                    Fun Fact 1: <input class="fun_fact" type="text" name="last_name" placeholder="First place in hotdog eating contest" required></input>
+                    </div>
+                </div>
+                <div class="row col-lg-12">
+                    <div class="sub">
+                        Fun Fact 2: <input class="fun_fact" type="text" name="last_name" placeholder="GoT die hard fan"></input>
+                    </div>
+                </div>
+                <div class="row col-lg-12">
+                    <div class="sub">
+                        Fun Fact 3: <input class="fun_fact" type="text" name="last_name" placeholder="Have 7 pets at home"></input>
+                    </div>
+                </div>
+                <div class="row col-lg-12" style="margin-bottom: 40px;">
+                    <input class="save_exit" type="submit" value="Exit & Continue">
+                    <input class="save_continue" type="submit" value="Save & Continue">
+                </div>
+
+            </form>
+        </div>
+
+        <footer>
+            <p class="myRightFooter" style="position: absolute; right: 50px; bottom: 40px">© 2018 Sun Ran & Yuhui Dai</p>
+        </footer>
+    </div>
+
+</div>
+
+
+
+
+
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<!-- Bootstrap Js CDN -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- jQuery Custom Scroller CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sidebar").mCustomScrollbar({
+            theme: "minimal"
+        });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar, #content').toggleClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+    });
+</script>
+</body>
+</html>

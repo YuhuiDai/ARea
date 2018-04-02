@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="shortcut icon" type="image/x-icon" href="../resources/d.png">
+        <title>Guideline</title>
+
+        <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="css/style2.css">
+
+        <!-- Scrollbar Custom CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+    </head>
+    <body>
+        <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3>Overview</h3>
+                </div>
+
+                <ul class="list-unstyled components">
+                    <p>Section</p>
+                    <li class="active">
+                        <a href="#">Guideline</a>
+                    </li>
+                    <li>
+                        <a>Information</a>
+                        <ul class="list-unstyled">
+                            <li><a href="/personal">Personal information</a></li>
+                            <li><a href="/bio">Biography</a></li>
+                            <li><a href="/fun_facts">Fun facts</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/marker">2D marker uploads</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Page Content Holder -->
+            <div id="content">
+
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <img src="resources/cornell_grey.png" height ="45px" class="d-inline-block align-top" alt="">
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#">A R e a</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            <div class="guideline">
+                <h2 style="color:black; font-size: 30px;">Guideline</h2>
+                <p style="font-size: 24px">In this section, you will provide your personal information for us to generate a user profile for you. Most importantly, you need to provide: </p>
+                <ul style="font-size: 18px">
+                    <li>A photo of yourself as your user profile picture</li>
+                    <li>Your favorite picture, which can or cannot include yourself. This picture will be displayed on your desk publicly, and it could be anything you like (your dog, a pokemon, etc)</li>
+                </ul>
+                <button class="continue"> <a href="/personal">Continue</a></button>
+            </div>
+            
+              <footer>
+                <p class="myRightFooter" style="position: absolute; right: 50px; bottom: 40px">© 2018 Sun Ran & Yuhui Dai</p>
+              </footer>
+        </div>
+            
+        </div>
+        <!-- jQuery CDN -->
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <!-- Bootstrap Js CDN -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- jQuery Custom Scroller CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#sidebar").mCustomScrollbar({
+                    theme: "minimal"
+                });
+
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar, #content').toggleClass('active');
+                    $('.collapse.in').toggleClass('in');
+                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                });
+            });
+        </script>
+    </body>
+</html>

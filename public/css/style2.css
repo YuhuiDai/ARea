@@ -1,0 +1,267 @@
+/*
+    DEMO STYLE
+*/
+@import url('https://fonts.googleapis.com/css?family=Lato:200,300,400');
+
+
+body {
+    font-family: Lato;
+    font-weight: 200;
+    background: #fafafa;
+}
+a, a:hover, a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #dddddd;
+    opacity: 1; /* Firefox */
+}
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+.navbar-default .navbar-nav>li>a {
+    color: #777;
+    font-size: 30px;
+}
+.myRightFooter {
+  float: right;
+  display: inline-block;
+  margin-left: 0.75rem;
+}
+.guideline {
+    padding: 20px;
+    padding-top: 5px;
+    font-family: Lato;
+    font-weight: 200;
+    color: #999;
+}
+.continue{
+    border-radius: 10px;
+    background-color: #999;
+    color: white;
+    border: none;
+    float: right;
+    margin: 30px;
+    font-size: 16px;
+    padding:10px;
+}
+.myFooter {
+    bottom: 40px; 
+}
+.sub{
+    margin: 15px;
+    float: left;
+    font-size: 16px;
+}
+.personal {
+    padding: 5px;
+    border-radius: 4px;
+    margin: 10px;
+    font-family: Lato;
+    font-weight: 200;
+    border: 1px dotted #999;
+    width: 200px;
+}
+.fun_fact {
+    padding: 5px;
+    border-radius: 4px;
+    margin: 10px;
+    font-family: Lato;
+    font-weight: 200;
+    border: 1px dotted #999;
+    width: 600px;
+}
+.save_exit  {
+    margin: 15px;
+    padding:10px;
+    float: right;
+    height: 40px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: Lato;
+    background-color: #999;
+}
+.save_continue  {
+    margin: 15px;
+    padding:10px;
+    float: right;
+    height: 40px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: Lato;
+    background-color: #999;
+}
+#biography {
+    width: 90%;
+    height: 150px;
+    border-radius: 5px;
+    border-color: #bbb;
+    padding: 10px;
+    margin: 10px;
+    font-size: 16px;
+}
+.explanation {
+    font-size: 16px;
+    padding: 10px;
+    margin: 20px;
+}
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #3e3e3e;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #5e5e5e;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+    font-size: 20px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+#sidebar ul li a:hover {
+    color: #5e5e5e;
+    background: #fff;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #fff;
+    background: #5e5e5e;
+}
+
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
+    content: '\e259';
+    display: block;
+    position: absolute;
+    right: 20px;
+    font-family: 'Glyphicons Halflings';
+    font-size: 0.6em;
+}
+a[aria-expanded="true"]::before {
+    content: '\e260';
+}
+
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+a.download {
+    background: #fff;
+    color: #5e5e5e;
+}
+a.article, a.article:hover {
+    background: #5e5e5e !important;
+    color: #fff !important;
+}
+
+textarea:focus{
+    outline:0;
+
+}
+input:focus {
+    outline: 0;
+}
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+#content {
+    width: calc(100% - 250px);
+    padding: 40px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#content.active {
+    width: 100%;
+}
+
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #content {
+        width: 100%;
+    }
+    #content.active {
+        width: calc(100% - 250px);
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}
