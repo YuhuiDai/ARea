@@ -56,25 +56,25 @@
         </nav>
         <div class="guideline">
             <h2 style="color:black; font-size: 30px;">Fun Facts</h2>
-            <form action="/marker"  style="text-align: center">
+            <form action="/fun_facts"  style="text-align: center" method="post">
                 <div class="row col-lg-12">
                     <div class="sub">
-                    Fun Fact 1: <input class="fun_fact" type="text" name="last_name" placeholder="First place in hotdog eating contest" required></input>
+                    Fun Fact 1: <input class="fun_fact" type="text" name="fun_fact1" placeholder="First place in hotdog eating contest" required></input>
                     </div>
                 </div>
                 <div class="row col-lg-12">
                     <div class="sub">
-                        Fun Fact 2: <input class="fun_fact" type="text" name="last_name" placeholder="GoT die hard fan"></input>
+                        Fun Fact 2: <input class="fun_fact" type="text" name="fun_fact2" placeholder="GoT die hard fan"></input>
                     </div>
                 </div>
                 <div class="row col-lg-12">
                     <div class="sub">
-                        Fun Fact 3: <input class="fun_fact" type="text" name="last_name" placeholder="Have 7 pets at home"></input>
+                        Fun Fact 3: <input class="fun_fact" type="text" name="fun_fact3" placeholder="Have 7 pets at home"></input>
                     </div>
                 </div>
                 <div class="row col-lg-12" style="margin-bottom: 40px;">
-                    <input class="save_exit" type="submit" value="Exit & Continue">
-                    <input class="save_continue" type="submit" value="Save & Continue">
+                    <input class="save_exit" type="submit" value="Save & Exit" name="myButton">
+                    <input class="save_continue" type="submit" value="Save & Continue" name="myButton">
                 </div>
 
             </form>

@@ -58,15 +58,15 @@
             <h2 style="color:black; font-size: 30px;">Biography</h2>
             <div class="explanation">Please provide a brief bio about yourself. Information such as academic background, research interests,
             professional backgrounds, etc. Please limit the response to 300 words</div>
-            <form action="/fun_facts"  style="text-align: center">
+            <form action="/bio"  style="text-align: center" method="post">
                 <div class="col-lg-12">
                     <textarea name="note" placeholder="My Name is Alex Smith. I obtained bachelor and Phd in cs from Cornell University.
 My current research is in computer vision..." id="biography" maxlength="300" required></textarea>
                     <div class="col-lg-4" style="margin-bottom: 20px;float: right">Characters left: <span id="count">300</span></div>
                 </div>
                 <div class="row col-lg-12" style="margin-bottom: 40px;">
-                    <input class="save_exit" type="submit" value="Exit & Continue">
-                    <input class="save_continue" type="submit" value="Save & Continue">
+                    <input class="save_exit" type="submit" value="Save & Exit" name="myButton">
+                    <input class="save_continue" type="submit" value="Save & Continue" name="myButton">
                 </div>
 
             </form>

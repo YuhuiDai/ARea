@@ -58,7 +58,7 @@
         </nav>
         <div class="guideline">
             <h2 style="color:black; font-size: 30px;">Personal Information</h2>
-            <form action="/bio"  style="text-align: center">
+            <form action="/personal"  style="text-align: center" method="post">
                 <div class="row col-lg-12">
                     <div class="col-lg-6">
                         <div class="sub">
@@ -75,7 +75,7 @@
                 <div class="row col-lg-12">
                     <div class="col-lg-6">
                         <div class="sub">
-                        Title:&nbsp<input class="personal" type="text" name="title" placeholder="Professor" required>
+                        Title:&nbsp<input class="personal" type="text" name="work_title" placeholder="Professor" required>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -87,7 +87,7 @@
                 <div class="row col-lg-12">
                     <div class="col-lg-6">
                         <div class="sub">
-                        Email:&nbsp<input class="personal" type="text" name="email" placeholder="alex@gmail.com" required>
+                        Email:&nbsp<input class="personal" type="email" name="email" placeholder="alex@gmail.com" required>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -106,8 +106,8 @@
 
                 </div>
                 <div class="row col-lg-12" style="margin-bottom: 40px;">
-                    <input class="save_exit" type="submit" value="Exit & Continue">
-                    <input class="save_continue" type="submit" value="Save & Continue">
+                    <input class="save_exit" type="submit" value="Save & Exit" name="myButton">
+                    <input class="save_continue" type="submit" value="Save & Continue" name="myButton">
                 </div>
 
             </form>
@@ -132,6 +132,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 <script src="js/custom-file-input.js"></script>
 <script type="text/javascript">
+//    var user = '<%= user %>';
+//    console.log(user);
+//    $("form").submit(function(e){
+//        var form = $(this);
+//        console.log(form);
+//        $.ajax({
+//            url   : form.attr('action'),
+//            type  : form.attr('method'),
+//            data  : form.serialize(), // data to be submitted
+//            beforeSend: function(xhr){xhr.setRequestHeader('current_user', user);},
+//            success: function(response){
+//                document.location.href = "/bio";
+//            }
+//        });
+//        return false;
+//    });
+
     $(document).ready(function () {
         $("#sidebar").mCustomScrollbar({
             theme: "minimal"
