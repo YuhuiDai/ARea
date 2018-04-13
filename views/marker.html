@@ -63,7 +63,7 @@
                 a picture of you; it could be a picture of your favorite pokemon; it could be a beautiful window view. The bottom line is
                 that it could be anything as long as it is within 2MB. Get creative, and have fun!
             </div>
-            <form action=""  style="text-align: center">
+            <form action="/marker"  style="text-align: center" method="post" enctype="multipart/form-data">
                 <div class="col-lg-6">
                     <div class="box" style="margin: 20px;">
                         <input type="file" name="marker_pic" id="marker" class="inputfile inputfile-2" accept="image/*" />
@@ -79,6 +79,9 @@
                 </div>
 
             </form>
+
+            <!--<br>-->
+            <!--<img src="<%= typeof file != 'undefined' ? file : '' %>">-->
         </div>
 
         <footer>

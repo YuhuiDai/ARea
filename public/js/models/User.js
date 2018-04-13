@@ -16,11 +16,11 @@ var userSchema = new mongoose.Schema({
             Title: {type: String, default:null},
             LinkedIn: {type: String, default: null},
             email: {type: String, default:null},
-            profilePic: { type: Buffer, contentType: String, default:null}
+            profilePic: { type: String, data: Buffer, contentType: String, default:null}
         },
         bio: {type: String, default:null}
     },
-    marker: {type: Buffer, default:null, contentType: String},
+    marker: {type: String, data: Buffer, default:null, contentType: String},
     section: {type: Number, default:1}
 });
 

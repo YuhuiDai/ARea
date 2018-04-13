@@ -1,6 +1,7 @@
 var express = require('express');
 var Request = require('request');
 var bodyParser = require('body-parser');
+var busboyBodyParser = require('busboy-body-parser');
 var path = require('path');
 var fs = require('fs');
 var port = process.env.PORT || 3000;
@@ -19,9 +20,44 @@ app.engine('.html', require('ejs').__express);
 app.set('view engine', 'html');
 //Add connection to the public folder for css & js files
 app.use(express.static(__dirname + '/public'));
+
 //app.use(multer({ dest: './uploads/', rename: function (fieldname, filename) {return filename;}}));
+// Set The Storage Engine
+ const storage = multer.diskStorage({
+     destination: './uploads/',
+     filename: function(req, file, cb){
+         cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+     }
+ });
+// // Init Upload
+const upload = multer({
+     storage: storage,
+     limits:{fileSize: 2000000},
+     fileFilter: function(req, file, cb){
+         checkFileType(file, cb);
+     }
+ });
+//const upload = multer({ dest: 'uploads/' })
+function checkFileType(file, cb){
+    console.log("checking the file type");
+    // Allowed ext
+    const filetypes = /jpeg|jpg|png/;
+    // Check ext
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    // Check mime
+    const mimetype = filetypes.test(file.mimetype);
+
+    if(mimetype && extname){
+        return cb(null,true);
+    } else {
+        cb('Error: Images Only!');
+    }
+}
+
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(bodyParser());
+//app.use(busboyBodyParser());
 app.use(cookieParser());
 app.use(session({secret: 'ARea session', resave: true, saveUninitialized: false}));
 
@@ -30,11 +66,6 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {});
 
-// app.post('/api/photo',function(req,res){
-//     user.information.personal.profilePic.data = fs.readFileSync(req.files.userPhoto.path);
-//     user.information.personal.profilePic.contentType = 'image/png';
-//     user.save();
-// });
 
 app.get("/", function (req, res) {
     console.log("Login Page");
@@ -98,8 +129,10 @@ app.get("/personal", function (req, res) {
     res.cookie('username', req.cookies.username).render('personal_info', {user:req.query.username});
 });
 
-app.post("/personal", function (req, res) {
+app.post("/personal", upload.single('profile_pic'), function (req, res, next) {
     console.log("personal post",req.cookies.username);
+    console.log(req.file);
+
     User.find({username: req.cookies.username}, function (err, curr_user) {
         if (err) {
             console.log(err);
@@ -114,7 +147,7 @@ app.post("/personal", function (req, res) {
             Department: req.body.department,
             lastName: req.body.last_name,
             firstName: req.body.first_name,
-            profilePic: req.body.profile_pic,
+            profilePic: req.file.filename
         };
         curr_user[0].information.personal = personalData;
         curr_user[0].section = Math.max(2, curr_user[0].section);
@@ -170,8 +203,28 @@ app.get("/marker", function (req, res) {
     res.cookie('username', req.cookies.username).render('marker');
 });
 
-app.post("/marker", function (req, res) {
+app.post('/uploads', upload.single('marker_pic'), function (req, res, next) {
+    console.log(req.file);
+    console.log("i am in the upload function");
+    // upload(req, res, function (err) {
+    //     if (err) {
+    //         // An error occurred when uploading
+    //         console.log("eeeeeroorrrrrrr");
+    //         return
+    //     }
+    //     console.log("file finallllllly uploaded")
+    //     // Everything went fine
+    // })
+    res.send("ok");
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+});
+
+app.post("/marker", upload.single('marker_pic'), function (req, res, next) {
     console.log("marker Page");
+    console.log(req.file);
+    console.log(req.body);
+
     User.find({username: req.cookies.username}, function (err, curr_user) {
         if (err) {
             console.log(err);
@@ -179,7 +232,10 @@ app.post("/marker", function (req, res) {
         if (curr_user == null) {
             return res.sendStatus(500);
         }
-        curr_user[0].marker = req.body.marker_pic;
+        //curr_user[0].marker.data = req.body.marker_pic; // if binary
+
+        curr_user[0].marker = req.file.filename;
+
         curr_user[0].save(function(err, info) {
             if (err) {
                 return console.error(err);
@@ -187,9 +243,10 @@ app.post("/marker", function (req, res) {
                 console.log("saving from marker page");
                 console.log(info);
             }
-
+            res.send("thank u"); // todo: display the uploaded image or text
         });
     });
+
     if (req.body.myButton == "Save & Exit") res.redirect("/");
 
 });
@@ -229,30 +286,6 @@ app.post("/fun_facts", function (req, res) {
     });
     if (req.body.myButton == "Save & Exit") res.redirect("/");
     else res.cookie('username', req.cookies.username).redirect("/marker");
-});
-
-app.post("/save", function (request, response) {
-    console.log("Making a post!");
-
-    Request.post({
-            url: CLOUDANT_URL,
-            auth: {
-                user: CLOUDANT_KEY,
-                pass: CLOUDANT_PASSWORD
-            },
-            json: true,
-            body: request.body
-        },
-        function (err, res, body) {
-            if (res.statusCode == 201){
-                console.log('Doc was saved!');
-                response.json(body);
-            }
-            else{
-                console.log('Error: '+ res.statusCode);
-                console.log(body);
-            }
-        });
 });
 
 
