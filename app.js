@@ -122,13 +122,31 @@ app.post("/login", function (req, res) {
 
 app.get("/guideline", function (req, res) {
     console.log(req.cookies.username);
-    res.cookie('username', req.cookies.username).render('guideline');
+    User.find({username: req.cookies.username}, function (err, curr_user) {
+        if (err) {
+            console.log(err);
+        }
+        if (curr_user == null) {
+            return res.sendStatus(500);
+        }
+
+        res.cookie('username', req.cookies.username).render('guideline', {section: curr_user[0].section});
+    });
+
 });
 
 app.get("/personal", function (req, res) {
     console.log("personal Page");
     console.log(req.cookies.username);
-    res.cookie('username', req.cookies.username).render('personal_info', {section: 1});
+    User.find({username: req.cookies.username}, function (err, curr_user) {
+        if (err) {
+            console.log(err);
+        }
+        if (curr_user == null) {
+            return res.sendStatus(500);
+        }
+        res.cookie('username', req.cookies.username).render('personal_info', {section: curr_user[0].section});
+    });
 });
 
 app.post("/personal", function (req, res) {
@@ -169,7 +187,7 @@ app.post("/personal", function (req, res) {
 app.get("/profile", function (req, res) {
     console.log("profile Page");
     console.log(req.cookies.username);
-    res.cookie('username', req.cookies.username).render('profile_pic', {section: 2});
+    res.cookie('username', req.cookies.username).render('profile_pic', {section: curr_user[0].section});
 });
 
 app.post("/profile", upload.single('profile_pic'), function (req, res, next) {
@@ -206,7 +224,15 @@ app.post("/profile", upload.single('profile_pic'), function (req, res, next) {
 app.get("/bio", function (req, res) {
     console.log("bio Page");
     console.log('bio: ', req.cookies.username);
-    res.cookie('username', req.cookies.username).render('bio');
+    User.find({username: req.cookies.username}, function (err, curr_user) {
+        if (err) {
+            console.log(err);
+        }
+        if (curr_user == null) {
+            return res.sendStatus(500);
+        }
+        res.cookie('username', req.cookies.username).render('bio', {section: curr_user[0].section});
+    });
 });
 
 app.post("/bio", function (req, res) {
@@ -237,7 +263,15 @@ app.post("/bio", function (req, res) {
 app.get("/fun_facts", function (req, res) {
     console.log("fun Page");
     console.log('fun user: ', req.cookies.username);
-    res.cookie('username', req.cookies.username).render('fun_facts');
+    User.find({username: req.cookies.username}, function (err, curr_user) {
+        if (err) {
+            console.log(err);
+        }
+        if (curr_user == null) {
+            return res.sendStatus(500);
+        }
+        res.cookie('username', req.cookies.username).render('fun_facts', {section: curr_user[0].section});
+    });
 });
 
 app.post("/fun_facts", function (req, res) {
@@ -273,7 +307,15 @@ app.post("/fun_facts", function (req, res) {
 app.get("/marker", function (req, res) {
     console.log("marker Page");
     console.log('maker user: ', req.cookies.username);
-    res.cookie('username', req.cookies.username).render('marker');
+    User.find({username: req.cookies.username}, function (err, curr_user) {
+        if (err) {
+            console.log(err);
+        }
+        if (curr_user == null) {
+            return res.sendStatus(500);
+        }
+        res.cookie('username', req.cookies.username).render('marker', {section: curr_user[0].section});
+    });
 });
 
 app.post("/marker", upload.single('marker_pic'), function (req, res, next) {
@@ -318,7 +360,7 @@ app.get("/summary", function (req, res) {
             return res.sendStatus(500);
         }
 
-        res.cookie('username', req.cookies.username).render('summary');
+        res.cookie('username', req.cookies.username).render('summary',{section: curr_user[0].section});
     });
 });
 

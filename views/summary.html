@@ -22,19 +22,19 @@
         <ul class="list-unstyled components">
             <p>Section</p>
             <li>
-                <a href="/guideline">Guideline<img class="checkmark" src="resources/checkmark.png" /></a>
+                <a href="/guideline">Guideline<img class="checkmark" src="<%= section > 0 ? 'resources/checkmark.png' : '' %>"/>?</a>
             </li>
             <li>
                 <a>Information</a>
                 <ul class="list-unstyled">
-                    <li><a href="/personal">Personal information <img class="checkmark" src="resources/checkmark.png"/></a></li>
-                    <li><a href="/profile">Profile picture<img class="checkmark" src="resources/checkmark.png" /></a></li>
-                    <li><a href="/bio">Biography <img class="checkmark" src="resources/checkmark.png" /></a></li>
-                    <li><a href="/fun_facts">Fun facts <img class="checkmark" src="resources/checkmark.png" /></a></li>
+                    <li><a href="/personal">Personal information <img class="checkmark" src="<%= section > 1 ? 'resources/checkmark.png' : '' %>" /></a></li>
+                    <li><a href="/profile">Profile picture<img class="checkmark" src="<%= section > 2 ? 'resources/checkmark.png' : '' %>" /></a></li>
+                    <li><a href="/bio">Biography <img class="checkmark" src="<%= section > 3 ? 'resources/checkmark.png' : '' %>" /></a></li>
+                    <li><a href="/fun_facts">Fun facts <img class="checkmark" src="<%= section > 4 ? 'resources/checkmark.png' : '' %>"/>></a></li>
                 </ul>
             </li>
-            <li id='marker_side' class="active">
-                <a href="#">2D marker uploads <img class="checkmark" src="resources/checkmark.png" /></a>
+            <li>
+                <a href="/marker">2D marker uploads<img class="checkmark" src="<%= section > 5 ? 'resources/checkmark.png' : '' %>"/>></a>
             </li>
         </ul>
     </nav>
