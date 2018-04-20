@@ -187,7 +187,15 @@ app.post("/personal", function (req, res) {
 app.get("/profile", function (req, res) {
     console.log("profile Page");
     console.log(req.cookies.username);
-    res.cookie('username', req.cookies.username).render('profile_pic', {section: curr_user[0].section});
+    User.find({username: req.cookies.username}, function (err, curr_user) {
+        if (err) {
+            console.log(err);
+        }
+        if (curr_user == null) {
+            return res.sendStatus(500);
+        }
+        res.cookie('username', req.cookies.username).render('profile_pic', {section: curr_user[0].section});
+    });
 });
 
 app.post("/profile", upload.single('profile_pic'), function (req, res, next) {

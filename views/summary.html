@@ -30,7 +30,7 @@
                     <li><a href="/personal">Personal information <img class="checkmark" src="<%= section > 1 ? 'resources/checkmark.png' : '' %>" /></a></li>
                     <li><a href="/profile">Profile picture<img class="checkmark" src="<%= section > 2 ? 'resources/checkmark.png' : '' %>" /></a></li>
                     <li><a href="/bio">Biography <img class="checkmark" src="<%= section > 3 ? 'resources/checkmark.png' : '' %>" /></a></li>
-                    <li><a href="/fun_facts">Fun facts <img class="checkmark" src="<%= section > 4 ? 'resources/checkmark.png' : '' %>"/>></a></li>
+                    <li><a href="/fun_facts">Fun facts <img class="checkmark" src="<%= section > 4 ? 'resources/checkmark.png' : '' %>"/></a></li>
                 </ul>
             </li>
             <li>
@@ -104,7 +104,7 @@
                 template += "<img src='../uploads/"+ data.information.profilePic+"' style='height: 300px; margin: 40px'/>";
                 template += "Your Personal 2D Marker: ";
                 template += "<img src='../uploads/"+ data.marker+"' style='height: 300px;margin: 40px'/></div>";
-                template += "<button id='logout'><a href='/login'>That's me</a></button><br>";
+                template += "<button id='logout'><a href='/'>That's me</a></button><br>";
                 $("#information").append(template);
             }
         });
