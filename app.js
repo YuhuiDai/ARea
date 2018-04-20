@@ -24,7 +24,7 @@ app.use(express.static(__dirname + '/public'));
 //app.use(multer({ dest: './uploads/', rename: function (fieldname, filename) {return filename;}}));
 // Set The Storage Engine
  const storage = multer.diskStorage({
-     destination: './uploads/',
+     destination: './public/uploads/',
      filename: function(req, file, cb){
          cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
      }
@@ -112,9 +112,11 @@ app.post("/login", function (req, res) {
         var section = curr_user[0].section;
         var username = curr_user[0].username;
         if (section == 1) res.cookie('username', username).redirect("/personal");
-        else if (section == 2) res.cookie('username', username).redirect("/bio");
-        else if (section == 3) res.cookie('username', username).redirect("/fun_facts");
-        else if (section == 4) res.cookie('username', username).redirect("/marker");
+        else if (section == 2) res.cookie('username', username).redirect("/profile");
+        else if (section == 3) res.cookie('username', username).redirect("/bio");
+        else if (section == 4) res.cookie('username', username).redirect("/fun_facts");
+        else if (section == 5) res.cookie('username', username).redirect("/marker");
+        else if (section == 6) res.cookie('username', username).redirect("/summary");
     });
 });
 
@@ -126,41 +128,76 @@ app.get("/guideline", function (req, res) {
 app.get("/personal", function (req, res) {
     console.log("personal Page");
     console.log(req.cookies.username);
-    res.cookie('username', req.cookies.username).render('personal_info', {user:req.query.username});
+    res.cookie('username', req.cookies.username).render('personal_info', {section: 1});
 });
 
-app.post("/personal", upload.single('profile_pic'), function (req, res, next) {
+app.post("/personal", function (req, res) {
     console.log("personal post",req.cookies.username);
-    console.log(req.file);
-
-    User.find({username: req.cookies.username}, function (err, curr_user) {
-        if (err) {
-            console.log(err);
-        }
-        if (curr_user == null) {
-            return res.sendStatus(500);
-        }
-        var personalData = {
-            email: req.body.email,
-            LinkedIn: req.body.linkedIn,
-            Title: req.body.work_title,
-            Department: req.body.department,
-            lastName: req.body.last_name,
-            firstName: req.body.first_name,
-            profilePic: req.file.filename
-        };
-        curr_user[0].information.personal = personalData;
-        curr_user[0].section = Math.max(2, curr_user[0].section);
-        curr_user[0].save(function(err, info) {
+    console.log(req.body);
+        User.find({username: req.cookies.username}, function (err, curr_user) {
             if (err) {
-                return console.error(err);
-            } else {
-                console.log("saving from personal page");
-                console.log(info);
+                console.log(err);
             }
+            if (curr_user == null) {
+                return res.sendStatus(500);
+            }
+            var personalData = {
+                email: req.body.email,
+                LinkedIn: req.body.linkedIn,
+                Title: req.body.work_title,
+                Department: req.body.department,
+                lastName: req.body.last_name,
+                firstName: req.body.first_name
+            };
+            curr_user[0].information.personal = personalData;
+            curr_user[0].section = Math.max(2, curr_user[0].section);
+            curr_user[0].save(function(err, info) {
+                if (err) {
+                    return console.error(err);
+                } else {
+                    console.log("saving from personal page");
+                    console.log(info);
+                }
 
+            });
         });
-    });
+
+    if (req.body.myButton == "Save & Exit") res.redirect("/");
+    else res.cookie('username', req.cookies.username).redirect("/profile");
+});
+
+app.get("/profile", function (req, res) {
+    console.log("profile Page");
+    console.log(req.cookies.username);
+    res.cookie('username', req.cookies.username).render('profile_pic', {section: 2});
+});
+
+app.post("/profile", upload.single('profile_pic'), function (req, res, next) {
+    console.log("profile post",req.cookies.username);
+    console.log(req.file);
+    if (req.file) {
+        User.find({username: req.cookies.username}, function (err, curr_user) {
+            if (err) {
+                console.log(err);
+            }
+            if (curr_user == null) {
+                return res.sendStatus(500);
+            }
+            curr_user[0].information.profilePic = req.file.filename;
+            curr_user[0].section = Math.max(3, curr_user[0].section);
+            curr_user[0].save(function(err, info) {
+                if (err) {
+                    return console.error(err);
+                } else {
+                    console.log("saving from profile page");
+                    console.log(info);
+                }
+
+            });
+        });
+    } else {
+        res.cookie('username', req.cookies.username).render('profile_pic', {msg:"NO IMAGE UPLOADED"})
+    }
 
     if (req.body.myButton == "Save & Exit") res.redirect("/");
     else res.cookie('username', req.cookies.username).redirect("/bio");
@@ -182,7 +219,7 @@ app.post("/bio", function (req, res) {
             return res.sendStatus(500);
         }
         curr_user[0].information.bio = req.body.note;
-        curr_user[0].section = Math.max(3, curr_user[0].section);
+        curr_user[0].section = Math.max(4, curr_user[0].section);
         curr_user[0].save(function(err, info) {
             if (err) {
                 return console.error(err);
@@ -196,61 +233,6 @@ app.post("/bio", function (req, res) {
     if (req.body.myButton == "Save & Exit") res.redirect("/");
     else res.cookie('username', req.cookies.username).redirect("/fun_facts");
 });
-
-app.get("/marker", function (req, res) {
-    console.log("marker Page");
-    console.log('maker user: ', req.cookies.username);
-    res.cookie('username', req.cookies.username).render('marker');
-});
-
-app.post('/uploads', upload.single('marker_pic'), function (req, res, next) {
-    console.log(req.file);
-    console.log("i am in the upload function");
-    // upload(req, res, function (err) {
-    //     if (err) {
-    //         // An error occurred when uploading
-    //         console.log("eeeeeroorrrrrrr");
-    //         return
-    //     }
-    //     console.log("file finallllllly uploaded")
-    //     // Everything went fine
-    // })
-    res.send("ok");
-    // req.file is the `avatar` file
-    // req.body will hold the text fields, if there were any
-});
-
-app.post("/marker", upload.single('marker_pic'), function (req, res, next) {
-    console.log("marker Page");
-    console.log(req.file);
-    console.log(req.body);
-
-    User.find({username: req.cookies.username}, function (err, curr_user) {
-        if (err) {
-            console.log(err);
-        }
-        if (curr_user == null) {
-            return res.sendStatus(500);
-        }
-        //curr_user[0].marker.data = req.body.marker_pic; // if binary
-
-        curr_user[0].marker = req.file.filename;
-
-        curr_user[0].save(function(err, info) {
-            if (err) {
-                return console.error(err);
-            } else {
-                console.log("saving from marker page");
-                console.log(info);
-            }
-            res.send("thank u"); // todo: display the uploaded image or text
-        });
-    });
-
-    if (req.body.myButton == "Save & Exit") res.redirect("/");
-
-});
-
 
 app.get("/fun_facts", function (req, res) {
     console.log("fun Page");
@@ -273,7 +255,7 @@ app.post("/fun_facts", function (req, res) {
             fun3: req.body.fun_fact3,
         };
         curr_user[0].information.fun_facts = fun;
-        curr_user[0].section = Math.max(4, curr_user[0].section);
+        curr_user[0].section = Math.max(5, curr_user[0].section);
         curr_user[0].save(function(err, info) {
             if (err) {
                 return console.error(err);
@@ -286,6 +268,73 @@ app.post("/fun_facts", function (req, res) {
     });
     if (req.body.myButton == "Save & Exit") res.redirect("/");
     else res.cookie('username', req.cookies.username).redirect("/marker");
+});
+
+app.get("/marker", function (req, res) {
+    console.log("marker Page");
+    console.log('maker user: ', req.cookies.username);
+    res.cookie('username', req.cookies.username).render('marker');
+});
+
+app.post("/marker", upload.single('marker_pic'), function (req, res, next) {
+    console.log("marker Page-----required file");
+    console.log(req.file);
+    if (req.file) {
+        User.find({username: req.cookies.username}, function (err, curr_user) {
+            if (err) {
+                console.log(err);
+            }
+            if (curr_user == null) {
+                return res.sendStatus(500);
+            }
+
+            curr_user[0].marker = req.file.filename;
+            curr_user[0].section = Math.max(6, curr_user[0].section);
+            curr_user[0].save(function(err, info) {
+                if (err) {
+                    return console.error(err);
+                } else {
+                    console.log("saving from marker page");
+                    console.log(info);
+                }
+                res.cookie('username', req.cookies.username).redirect("/summary"); // todo: display the uploaded image or text
+            });
+        });
+    } else {
+        console.log("NNNNNOOOOOOO IMAGE")
+        res.render("marker",{msg: "NO IMAGE UPLOADED"})
+    }
+    if (req.body.myButton == "Save & Exit") res.redirect("/");
+
+});
+
+app.get("/summary", function (req, res) {
+
+    User.find({username: req.cookies.username}, function (err, curr_user) {
+        if (err) {
+            console.log(err);
+        }
+        if (curr_user == null) {
+            return res.sendStatus(500);
+        }
+
+        res.cookie('username', req.cookies.username).render('summary');
+    });
+});
+
+
+app.get("/userInfo", function (req, res) {
+
+    User.find({username: req.cookies.username}, function (err, curr_user) {
+        if (err) {
+            console.log(err);
+        }
+        if (curr_user == null) {
+            return res.sendStatus(500);
+        }
+
+        res.json(curr_user[0]);
+    });
 });
 
 

@@ -24,17 +24,18 @@
         <ul class="list-unstyled components">
             <p>Section</p>
             <li>
-                <a href="/guideline">Guideline</a>
+                <a href="/guideline">Guideline<img class="checkmark" src="resources/checkmark.png" /></a>
             </li>
             <li>
                 <a>Information</a>
                 <ul class="list-unstyled">
-                    <li><a href="/personal">Personal information</a></li>
-                    <li><a href="/bio">Biography</a></li>
-                    <li><a href="/fun_facts">Fun facts</a></li>
+                    <li><a href="/personal">Personal information <img class="checkmark" src="resources/checkmark.png"/></a></li>
+                    <li><a href="/profile">Profile picture<img class="checkmark" src="resources/checkmark.png" /></a></li>
+                    <li><a href="/bio">Biography <img class="checkmark" src="resources/checkmark.png" /></a></li>
+                    <li><a href="/fun_facts">Fun facts <img class="checkmark" src="resources/checkmark.png" /></a></li>
                 </ul>
             </li>
-            <li class="active">
+            <li id='marker_side' class="active">
                 <a href="#">2D marker uploads</a>
             </li>
         </ul>
@@ -66,12 +67,12 @@
             <form action="/marker"  style="text-align: center" method="post" enctype="multipart/form-data">
                 <div class="col-lg-6">
                     <div class="box" style="margin: 20px;">
-                        <input type="file" name="marker_pic" id="marker" class="inputfile inputfile-2" accept="image/*" />
+                        <input type="file" name="marker_pic" id="marker" class="inputfile inputfile-2" accept="image/*"/>
                         <label for="marker"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
                             <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/>
                         </svg> <span>Upload any photo (max 2MB)&hellip;</span></label>
                     </div>
-
+                    <%= typeof msg != 'undefined' ? msg : '' %>
                 </div>
                 <div class="row col-lg-12" style="margin-bottom: 40px;">
                     <input class="save_exit" type="submit" value="Save & Exit" name="myButton">
@@ -103,6 +104,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 <script src="js/custom-file-input.js"></script>
 <script type="text/javascript">
+    <!---->
+//    function checkmark() {
+//        $("#marker_side").append('<img src="resources/cornell_grey.png" />' );
+//    }
+    function uploaded() {
+        console.log("clicked uploaded");
+        if ($("#marker").val() == null) {
+            window.alert("no image attached");
+        }
+    }
     $(document).ready(function () {
         $("#sidebar").mCustomScrollbar({
             theme: "minimal"

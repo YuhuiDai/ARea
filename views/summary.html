@@ -2,8 +2,8 @@
 <html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8">
-    <title>Bio</title>
-    <link rel="shortcut icon" type="image/x-icon" href="resources/d.png">
+    <title>Summary</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../resources/d.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="css/style2.css">
@@ -22,19 +22,19 @@
         <ul class="list-unstyled components">
             <p>Section</p>
             <li>
-                <a href="/guideline">Guideline<img class="checkmark" src="resources/checkmark.png"/></a>
-            </li>
-            <li class="active">
-                <a>Information</a>
-                <ul class="list-unstyled">
-                    <li><a href="/personal">Personal information<img class="checkmark" src="resources/checkmark.png"/></a></li>
-                    <li><a href="/profile">Profile picture<img class="checkmark" src="resources/checkmark.png"/></a></li>
-                    <li class="active"><a href="#">Biography</a></li>
-                    <li><a href="/fun_facts">Fun facts</a></li>
-                </ul>
+                <a href="/guideline">Guideline<img class="checkmark" src="resources/checkmark.png" /></a>
             </li>
             <li>
-                <a href="/marker">2D marker uploads</a>
+                <a>Information</a>
+                <ul class="list-unstyled">
+                    <li><a href="/personal">Personal information <img class="checkmark" src="resources/checkmark.png"/></a></li>
+                    <li><a href="/profile">Profile picture<img class="checkmark" src="resources/checkmark.png" /></a></li>
+                    <li><a href="/bio">Biography <img class="checkmark" src="resources/checkmark.png" /></a></li>
+                    <li><a href="/fun_facts">Fun facts <img class="checkmark" src="resources/checkmark.png" /></a></li>
+                </ul>
+            </li>
+            <li id='marker_side' class="active">
+                <a href="#">2D marker uploads <img class="checkmark" src="resources/checkmark.png" /></a>
             </li>
         </ul>
     </nav>
@@ -55,22 +55,13 @@
                 </div>
             </div>
         </nav>
-        <div class="bio">
-            <h2 style="color:black; font-size: 30px;">Biography</h2>
-            <div class="explanation">Please provide a brief bio about yourself. Information such as academic background, research interests,
-            professional backgrounds, etc. Please limit the response to 300 words</div>
-            <form action="/bio"  style="text-align: center" method="post">
-                <div class="col-lg-12">
-                    <textarea name="note" placeholder="My Name is Alex Smith. I obtained bachelor and Phd in cs from Cornell University.
-My current research is in computer vision..." id="biography" maxlength="300" required></textarea>
-                    <div class="col-lg-4" style="margin-bottom: 20px;float: right">Characters left: <span id="count">300</span></div>
-                </div>
-                <div class="row col-lg-12" style="margin-bottom: 40px;">
-                    <input class="save_exit" type="submit" value="Save & Exit" name="myButton">
-                    <input class="save_continue" type="submit" value="Save & Continue" name="myButton">
-                </div>
+        <div class="guideline">
+            <h2 style="color:black; font-size: 30px;">Your Personal ARea profile</h2>
+            <div class="explanation">
+                Awesome~~ According to all the information we gathered, here is your ARea profile page!
+            </div>
+            <div id="information"></div>
 
-            </form>
         </div>
 
         <footer>
@@ -92,8 +83,33 @@ My current research is in computer vision..." id="biography" maxlength="300" req
 <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 <script src="js/custom-file-input.js"></script>
 <script type="text/javascript">
+    <!---->
+    //    function checkmark() {
+    //        $("#marker_side").append('<img src="resources/cornell_grey.png" />' );
+    //    }
+
 
     $(document).ready(function () {
+        $.ajax({
+            url: "/userInfo",
+            success: function(data) {
+                var template = "<p> Name: "+data.information.personal.firstName+" "+data.information.personal.lastName+"</p>";
+                template += "<p> Department: "+data.information.personal.Department+"</p>";
+                template += "<p> Title: "+data.information.personal.Title+"</p>";
+                template += "<p> LinkedIn: "+data.information.personal.LinkedIn+"</p>";
+                template += "<p> Email: "+data.information.personal.email+"</p>";
+                template += "<p> Background: "+data.information.bio+"</p>";
+                template += "<p> Fun fact: "+data.information.fun_facts.fun1+"</p>";
+                template += "<div> Profile Picture: ";
+                template += "<img src='../uploads/"+ data.information.profilePic+"' style='height: 300px; margin: 40px'/>";
+                template += "Your Personal 2D Marker: ";
+                template += "<img src='../uploads/"+ data.marker+"' style='height: 300px;margin: 40px'/></div>";
+                template += "<button id='logout'><a href='/login'>That's me</a></button><br>";
+                $("#information").append(template);
+            }
+        });
+
+        console.log(user);
         $("#sidebar").mCustomScrollbar({
             theme: "minimal"
         });
@@ -102,9 +118,6 @@ My current research is in computer vision..." id="biography" maxlength="300" req
             $('#sidebar, #content').toggleClass('active');
             $('.collapse.in').toggleClass('in');
             $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-        });
-        $("#biography").keyup(function(){
-            $("#count").text(300 - $(this).val().length);
         });
     });
 </script>
